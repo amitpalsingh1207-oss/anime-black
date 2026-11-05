@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Black Station</title>
+    <!-- VideoJS CSS library for the streaming player -->
+    <link href="https://zencdn.net" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #0d0d11;
+            color: #ffffff;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #161622;
+            padding: 15px;
+            text-align: center;
+            border-bottom: 3px solid #ff4a5a;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            color: #ff4a5a;
+            letter-spacing: 2px;
+        }
+        .main-container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+        .player-box {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.8);
+            background: #000;
+        }
+        .anime-info {
+            margin: 15px 0;
+        }
+        .anime-info h2 {
+            margin: 0 0 5px 0;
+            font-size: 20px;
+        }
+        .anime-info p {
+            margin: 0;
+            color: #aaaaaa;
+            font-size: 14px;
+        }
+        .episode-section {
+            margin-top: 25px;
+        }
+        .episode-section h3 {
+            border-left: 4px solid #ff4a5a;
+            padding-left: 10px;
+            margin-bottom: 15px;
+        }
+        .episode-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        .ep-btn {
+            background-color: #161622;
+            color: white;
+            border: 2px solid #252538;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            transition: 0.2s;
+        }
+        .ep-btn:active, .ep-btn.active {
+            background-color: #ff4a5a;
+            border-color: #ff4a5a;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <!-- Your brand new app title -->
+        <h1>ANIME BLACK</h1>
+    </div>
+
+    <div class="main-container">
+        <!-- Video Player -->
+        <div class="player-box">
+            <video id="anime-player" class="video-js vjs-default-skin vjs-big-play-centered vjs-16-9" controls preload="auto" width="100%">
+                <!-- Your custom Mux stream is configured here as the default video -->
+                <source id="video-source" src="https://mux.com" type="application/x-mpegURL">
+            </video>
+        </div>
+
+        <!-- Details Info -->
+        <div class="anime-info">
+            <h2 id="anime-title">Custom Anime: Episode 1</h2>
+            <p>Action • Fantasy • Animation</p>
+        </div>
+
+        <!-- Episode Selector List -->
+        <div class="episode-section">
+            <h3>Select Episode</h3>
+            <div class="episode-grid">
+                <!-- Your custom Mux stream is linked to the EP 01 button below -->
+                <div class="ep-btn active" onclick="changeEpisode('Episode 1', 'https://mux.com', this)">EP 01</div>
+                <div class="ep-btn" onclick="changeEpisode('Episode 2', 'https://mux.com', this)">EP 02</div>
+                <div class="ep-btn" onclick="changeEpisode('Episode 3', 'https://mux.com', this)">EP 03</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VideoJS JavaScript Libraries -->
+    <script src="https://zencdn.net"></script>
+    
+    <script>
+        var player = videojs('anime-player');
+
+        function changeEpisode(epName, videoUrl, buttonElement) {
+            document.getElementById('anime-title').innerText = "Custom Anime: " + epName;
+            player.src({ type: 'application/x-mpegURL', src: videoUrl });
+            player.play();
+
+            var buttons = document.getElementsByClassName('ep-btn');
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].classList.remove('active');
+            }
+            buttonElement.classList.add('active');
+        }
+    </script>
+</body>
+</html>
